@@ -4,7 +4,7 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const dbUrl = process.env.MONGODB_URL ? process.env.MONGODB_URL : 'mongodb://advice-anonymous';
+const dbUrl = process.env.MONGODB_URI ? process.env.MONGODB_URI : 'mongodb://advice-anonymous';
 mongoose.connect(dbUrl);
 
 const app = express();
