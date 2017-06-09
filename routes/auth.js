@@ -3,6 +3,11 @@ const router = express.Router();
 const User = require('../models/user');
 const passport = require('passport');
 
+const userAttrs = (user) => {
+  const { _id, username, role } = user;
+  return { _id, username, role };
+}
+
 const isAuthenticated = (req, res, next) => {
   if (req.user)
     next();
@@ -19,7 +24,7 @@ router.post('/signup', (req, res) => {
     user.save( (err, user) => {
       if (err)
         return res.status(500).json(err);
-      return res.json(user)
+      return res.json(userAttrs(user))
     });
   });
 });
@@ -41,21 +46,12 @@ router.post('/signin', (req, res) => {
 });
 
 router.get('/user', isAuthenticated, (req,res) => {
-  return res.json(req.user)
+  return res.json(userAttrs(user))
 });
 
 router.delete('/sign_out', (req, res) => {
   req.logout();
   res.status(200).json({});
 });
-
-//Helper function to whitelist attributes
-const userAttrs = (user) => {
-  const { _id, username, role } = user;
-  return { _id, username, role };
-}
-
-//Signin AND Signup
-return res.json(userAttrs(user))
 
 module.exports = router;
