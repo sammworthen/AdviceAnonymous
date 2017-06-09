@@ -3,6 +3,15 @@ const router = express.Router();
 const User = require('../models/user');
 const passport = require('passport');
 
+//Helper function to whitelist attributes
+const userAttrs = (user) => {
+  const { _id, username, role } = user;
+  return { _id, username, role };
+}
+
+//Signin AND Signup
+return res.json(userAttrs(user))
+
 const isAuthenticated = (req, res, next) => {
   if (req.user)
     next();
